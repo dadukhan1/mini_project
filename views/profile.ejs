@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="p-10 w-full min-h-screen bg-zinc-900 text-white">
+        <div class="flex justify-end">
+            <a class="px-3 py-2 bg-red-500 rounded-md " href="/logout">Logout</a>
+        </div>
+        <h1 class="text-3xl mb-5">
+            <%=user.name%>
+        </h1>
+        <h3 class="mb-2">You can new create posts...</h3>
+        <form action="/post" method="post">
+            <textarea class="block p-2 bg-transparent outline-none w-1/3 border-2 rounded-md border-zinc-800"
+                placeholder="What's on your mind " name="content" id=""></textarea>
+            <input class="block bg-blue-500 px-3 py-2 rounded-md mt-2" type="submit" value="Create post">
+        </form>
+        <% user.post.forEach((post)=>{%>
+
+            <div class="posts mt-20">
+                <h2 class="text-zinc-400">Your Posts</h2>
+                <div class="posts-container mt-5">
+                    <div class="post w-1/3 p-5 rounded-md bg-zinc-800 border-2 border-zinc-700 mb-2">
+                        <h4 class="text-blue-500 mb-2">
+                            <%=user.email%>
+                        </h4>
+                        <p class="text-sm tracking-tighter">
+                            <%=post.content%>
+                        </p>
+                        <small class="mt-2 inline-block">
+                            <%=post.likes.length%> likes
+                        </small>
+                        <div class="btns flex mt-2 justify-between">
+                            <a class="text-blue-500" href="/like/<%=post._id%>">
+                                <%= post.likes.indexOf(user._id)===-1 ? "Like" : "Unlike" %>
+                            </a>
+                            <a class="text-zinc-500" href="/edit/<%= post._id %>">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%}) %>
+
+    </div>
+
+</body>
+
+</html>
